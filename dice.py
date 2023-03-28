@@ -3,6 +3,8 @@
     CS 5001 - Final Project
     Dice class
 """
+
+
 import random
 
 
@@ -18,24 +20,33 @@ class Dice(object):
 
     @property
     def name(self) -> str:
-        # gets name of dice
+        """
+        Gets name of dice
+        """
         return self.__name
 
 
     @property
     def sides(self) -> int:
-        # gets number of sides
+        """
+        Gets number of sides
+        """
         return self.__sides
 
 
     def __str__(self) -> str:
-        # prints info about dice object
+        """
+        Prints info about dice object's attributes
+        """
         info = "Dice name: " + self.__name + "\n" \
                 "Number of sides: " + str(self.__sides)
         return info
 
 
     def roll(self) -> int:
-        # rolls the dice
+        """
+        Rolls the dice
+        Returns: int outcome (result of the roll)
+        """
         outcome = random.randint(1, self.__sides)
         return outcome

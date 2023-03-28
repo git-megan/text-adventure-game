@@ -3,13 +3,17 @@
     CS 5001 - Final Project
     Tests for dice.py
 """
+
+
 from dice import Dice
 import unittest
 
 
 class DiceTest(unittest.TestCase):
     def test_init(self):
-        # test if dice initializes correctly
+        """
+        Test if dice initializes correctly
+        """
         d6_default = Dice("d6")
         self.assertEqual(d6_default.name, "d6")
         self.assertEqual(d6_default.sides, 6)
@@ -19,7 +23,9 @@ class DiceTest(unittest.TestCase):
 
 
     def test_roll(self):
-        # tests if 10 rolls on a d6 are in range (1-6)
+        """
+        Tests if 10 rolls on a d6 are in range (1-6)
+        """
         d6_default = Dice("d6")
         # manually check if print function works
         print(d6_default)
