@@ -3,8 +3,6 @@
     CS 5001 - Final Project
     Tests for dice.py
 """
-
-
 from dice import Dice
 import unittest
 

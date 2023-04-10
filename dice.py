@@ -3,8 +3,6 @@
     CS 5001 - Final Project
     Dice class
 """
-
-
 import random
 
 
