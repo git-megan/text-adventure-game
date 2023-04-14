@@ -20,6 +20,27 @@ def menu() -> Tuple[str, str]:
     return check.strip().casefold(), check
 
 
+def print_status(scores_dict: dict) -> None:
+    """
+    Prints the players' health scores in a formatted way
+    Args:
+        scores_dict (dict): A dictionary with the player name as key, and health as value
+    Returns:
+        None
+    """
+    print("\nHealth Status:")
+    for key, value in scores_dict.items():
+        player_name = key
+        health = value
+
+        # ensure no negative health percentages
+        if health < 0:
+            health = 0
+        
+        # prints health as a percentage
+        print(f"{player_name}: {health}%")
+
+
 def health_roll(impact: str) -> int:
     """
     Gets user's dice roll impacting a player's health
@@ -74,13 +95,7 @@ def run_intro() -> dict:
 
         elif (command == "status"):
             # prints health status
-            print("\nHealth Status:")
-            for key, value in health_dict.items():
-                player_name = key
-                health = value
-                if health < 0:
-                    health = 0
-                print(f"{player_name}: {health}%")
+            print_status(health_dict)
             command, raw = menu()
             
         else:
@@ -129,13 +144,7 @@ def run_part_2(saved_scores: dict) -> dict:
 
         elif (command == "status"):
             # prints health status
-            print("\nHealth Status:")
-            for key, value in health_dict.items():
-                player_name = key
-                health = value
-                if health < 0:
-                    health = 0
-                print(f"{player_name}: {health}%")
+            print_status(health_dict)
             command, raw = menu()
 
         else:
@@ -181,13 +190,7 @@ def run_part_3(saved_scores: dict) -> dict:
 
         elif (command == "status"):
             # prints health status
-            print("\nHealth Status:")
-            for key, value in health_dict.items():
-                player_name = key
-                health = value
-                if health < 0:
-                    health = 0
-                print(f"{player_name}: {health}%")
+            print_status(health_dict)
             command, raw = menu()
 
         else:
