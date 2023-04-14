@@ -6,8 +6,9 @@ File for story narrative elements
 
 
 def intro():
-    print("\nYou are driving to Marin a convertable with your two friends - Martin and Robin.")
-    print("It's a wonderful day, but all of a sudden you hear a buzz sound growing louder.")
+    print("\nPart I - Intro")
+    print("\nYou are driving to Marin in a convertable with your two friends - Martin and Robin.")
+    print("It's a wonderful day, but all of a sudden you hear a buzzing sound growing louder.")
     choice = input("Your options ('state concern', 'continue')")
     if choice.strip() == 'state concern':
         print("\nYou: Hey, do you hear that sound?...")
@@ -24,6 +25,7 @@ def intro():
 
 
 def part_2():
+    print("\nPart II - The Escape")
     print("\nYou realize you need to get out of this situation.")
     print("You move to get out of the car")
     choice = input("Your options for moving ('slow', 'fast')")
@@ -45,3 +47,28 @@ def part_2():
     choice = input("Your options ('left', 'right')")
     print("\nYou keep running, and then stop to look back.")
     print("Did you out run the swarm?")
+
+
+def part_3():
+    print("\nPart III - Facing the Swarm")
+    print("\nYou run back to help your friends.")
+    print("Your friends are being circled by a swarm of angry bees.")
+    choice = input("Your options ('help', 'watch')")
+    while choice.strip() == 'watch':
+        print("\nMartin and Robin scream: 'Help!!'")
+        choice = input("Your options ('help', 'watch')")
+    print("\nYou run up to your friends to help. Bees begin to swarm you.")
+    print("Robin: Pull your shirt over your face to cover your eyes and mouth.")
+    choice = input("Choose face protection ('tshirt', 'nothing')")
+    while choice.strip() == 'nothing':
+        print("\nBees swarm your face and target your eyes and mouth.")
+        choice = input("Choose face protection ('tshirt', 'nothing')")
+    print("\nYou protect your face by pulling your shirt up to cover it.")
+    print("\nYou see a hose on the ground...")
+    choice = input("Your options ('spray', 'nothing')")
+    while choice.strip() == 'nothing':
+        print("\nThe bees continue to attack your group.")
+        choice = input("Your options ('spray', 'nothing')")
+    print("\nYou spray the hose in the air and at your faces, keeping the bees away.")
+    print("\nMartin: Hey - there's someone at the door of that house there...")
+    print("Robin: Let's make a run for it.")

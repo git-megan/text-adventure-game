@@ -4,7 +4,7 @@
     Module for the game play
 """
 import string
-from storyline import intro, part_2
+from storyline import intro, part_2, part_3
 from typing import List, Tuple
 from dice import Dice
 
@@ -16,7 +16,7 @@ def menu() -> Tuple[str, str]:
     Returns:
     Tuple[str, str]: lowercase value, and original value of response
     """
-    check = input("What would you like to do? (play, status, or exit) ")
+    check = input("\nGame Menu: What would you like to do? (play, status, or exit) ")
     return check.strip().casefold(), check
 
 
@@ -29,7 +29,7 @@ def health_roll(impact: str) -> int:
         int: positive int about the dice outcome
     """
     print(f"\nRoll the dice to find out {impact}.")
-    kb_entry = input("Press any key to roll the dice >")
+    kb_entry = input("Press ENTER to roll the dice >")
     d6 = Dice("d6")
     roll = d6.roll()
     print("\nYou rolled a", str(roll))
@@ -112,17 +112,18 @@ def run_part_2(saved_scores: dict) -> dict:
             damage = 0
             part_2_roll = health_roll("if any bees have followed you")
             if (part_2_roll > 3):
+                damage += 2
                 print("\nLuckily no bees have followed you. You're in the clear.")
-                print("Damage to your health: 0")
+                print("\nUnfortunately, your arm got scratched while running.")
             else:
                 damage += 15
                 print("\nA loud buzz rings in your ears.\nYou swat at your face, but it's too late, you've been stung.")
-                # update Martin's updated health score
-                print(f"Damage to your health: -{str(damage)}")
-                original_health = health_dict["You"]
-                new_health = original_health - damage
-                health_dict["You"] = new_health
-            choice = input("\nPress any key to continue >")
+            # update health score
+            print(f"Damage to your health: -{str(damage)}")
+            original_health = health_dict["You"]
+            new_health = original_health - damage
+            health_dict["You"] = new_health
+            choice = input("\nPress ENTER to continue >")
             print("\nMeanwhile... your friends need you.")
             return health_dict
 
@@ -143,18 +144,97 @@ def run_part_2(saved_scores: dict) -> dict:
             command, raw = menu()
     return health_dict
 
+
+def run_part_3(saved_scores: dict) -> dict:
+    """
+    Runs Part III of the adventure game
+    Args:
+        saved_scores (dict): Dictionary of health scores from playing the intro
+    Returns:
+        dict: Dictionary of health scores from playing Part III
+    """
+    health_dict = saved_scores
+    menu_options = "play, status, or exit"
+    command, raw = menu()
+    
+    # loop continues until user exits
+    while (command != "exit"):
+        if (command == "play"):
+            # game play
+            # part III - help friends
+            part_3()
+            damage = 0
+            part_3_roll = health_roll("if your group out ran the bees")
+            if (part_3_roll > 2):
+                print("\nEveryone made it safely inside the stranger's house.")
+            else:
+                damage += 20
+                print("\nThe bees swarm and sting you as your run, but you make it inside the house.")
+                # update health scores for everyone in group
+                print(f"Damage to your group's health: -{str(damage)}")
+                for player, health in health_dict.items():
+                    new_health = health - damage
+                    health_dict[player] = new_health
+            
+            choice = input("\nPress ENTER to continue >")
+            return health_dict
+
+        elif (command == "status"):
+            # prints health status
+            print("\nHealth Status:")
+            for key, value in health_dict.items():
+                player_name = key
+                health = value
+                if health < 0:
+                    health = 0
+                print(f"{player_name}: {health}%")
+            command, raw = menu()
+
+        else:
+            print(f"Invalid command: must be {menu_options}")
+            # provide the menu again
+            command, raw = menu()
+    return health_dict
+
+
 def main() -> None:
     """
     Runs the adventure game
     """
+    print("\nEscape of the Bees")
+    print("A text adventure game by Megan Brown")
     # run part I - intro
     health_dict_1 = run_intro()
-    print("Current health scores:", health_dict)
+    
+    # save scores
+    final_scores = health_dict_1
+
+    #current game ending str
+    end_message = "\nThe end... 🐝"
 
     # run part II - escape
-    martin_health = health_dict["Martin"]
+    martin_health = health_dict_1["Martin"]
     if (martin_health != 100):
         health_dict_2 = run_part_2(health_dict_1)
+        final_scores = health_dict_2
+        
+        # run part III - help friends
+        your_health = health_dict_2["You"]
+        if (your_health != 100):
+            final_scores = run_part_3(health_dict_2)
+            end_message = "\nThe end... You survived!! 🎉"
+    
+        # resolution
+        print("\nA woman in a beekeeper suit comes by.")
+        print("She's holding a basket of epipens and offers it to you.")
+        print("You want to ask her what is going on.")
+        choice = input("Your choice ('ask')")
+        if (choice.strip() == "ask"):
+            print("\nYou: What was that?")
+            print("Beekeeper: Killer bees took over my hive. I tried to kill the queen today, but it went very badly.")
+
+    print(end_message)
+    print("\nFinal health scores:", final_scores)
 
 
 if __name__ == "__main__":
