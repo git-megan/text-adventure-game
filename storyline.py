@@ -96,3 +96,21 @@ def part_3() -> None:
     print("\nYou spray the hose in the air and at your faces, keeping the bees away.")
     print("\nMartin: Hey - there's someone at the door of that house there...")
     print("Robin: Let's make a run for it.")
+
+
+def resolution() -> None:
+    """
+    Storyline for the resolution of the game
+    Bee keeper arrives and reveals context
+    Args:
+        None
+    Returns:
+        None
+    """
+    print("\nA woman in a beekeeper suit comes by.")
+    print("She's holding a basket of epipens and offers it to you.")
+    print("You want to ask her what is going on.")
+    choice = input("Your choice ('ask')")
+    if (choice.strip() == "ask"):
+        print("\nYou: What was that?")
+        print("Beekeeper: Killer bees took over my hive. I tried to kill the queen today, but it went very badly.")

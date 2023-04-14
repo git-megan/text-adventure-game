@@ -4,7 +4,7 @@
     Module for the game play
 """
 import string
-from storyline import intro, part_2, part_3
+from storyline import intro, part_2, part_3, resolution
 from typing import List, Tuple
 from dice import Dice
 
@@ -192,7 +192,7 @@ def run_part_3(saved_scores: dict) -> dict:
             # prints health status
             print_status(health_dict)
             command, raw = menu()
-
+       
         else:
             print(f"Invalid command: must be {menu_options}")
             # provide the menu again
@@ -203,6 +203,14 @@ def run_part_3(saved_scores: dict) -> dict:
 def main() -> None:
     """
     Runs the adventure game
+    
+    Health scores are saved at each chapter 
+    and passed on to the next chapeter
+
+    Args:
+        None
+    Returns:
+        None
     """
     print("\nEscape of the Bees")
     print("A text adventure game by Megan Brown")
@@ -227,17 +235,11 @@ def main() -> None:
             final_scores = run_part_3(health_dict_2)
             end_message = "\nThe end... You survived!! 🎉"
     
-        # resolution
-        print("\nA woman in a beekeeper suit comes by.")
-        print("She's holding a basket of epipens and offers it to you.")
-        print("You want to ask her what is going on.")
-        choice = input("Your choice ('ask')")
-        if (choice.strip() == "ask"):
-            print("\nYou: What was that?")
-            print("Beekeeper: Killer bees took over my hive. I tried to kill the queen today, but it went very badly.")
+        # resolution - bee keeper reveals context
+        # this plays for all endings/exits of the game
+        resolution()
 
     print(end_message)
-    print("\nFinal health scores:", final_scores)
 
 
 if __name__ == "__main__":
