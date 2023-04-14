@@ -5,7 +5,15 @@ File for story narrative elements
 """
 
 
-def intro():
+def intro() -> None:
+    """
+    Intro storyline
+    Sets the scene for the bee swarm
+    Args:
+        None
+    Returns:
+        None
+    """
     print("\nPart I - Intro")
     print("\nYou are driving to Marin in a convertable with your two friends - Martin and Robin.")
     print("It's a wonderful day, but all of a sudden you hear a buzzing sound growing louder.")
@@ -24,7 +32,15 @@ def intro():
     print("He's swelling around his neck, and a large swarm of bees is approaching.")
 
 
-def part_2():
+def part_2() -> None:
+    """
+    Part II of storyline
+    Narrative for running away from the bees
+    Args:
+        None
+    Returns:
+        None
+    """
     print("\nPart II - The Escape")
     print("\nYou realize you need to get out of this situation.")
     print("You move to get out of the car")
@@ -49,7 +65,15 @@ def part_2():
     print("Did you out run the swarm?")
 
 
-def part_3():
+def part_3() -> None:
+    """
+    Part III of the storyline
+    Narrative for helping your friends survive
+    Args:
+        None
+    Returns:
+        None
+    """
     print("\nPart III - Facing the Swarm")
     print("\nYou run back to help your friends.")
     print("Your friends are being circled by a swarm of angry bees.")
