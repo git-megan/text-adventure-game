@@ -4,8 +4,7 @@ CS 5001 - Final Project
 Scene class
 """
 from typing import Tuple
-from game import health_roll
-
+from dice import Dice
 
 class Scene(object):
     def __init__(self, name: str, impact: str, player: str, cut_off: int, good_outcome: Tuple[str, int], bad_outcome: Tuple[str, int]) -> None:
@@ -91,7 +90,8 @@ class Scene(object):
         damage = 0
 
         # roll dice to find out the damage and outcome
-        scene_roll = health_roll(self.__impact)
+        d6 = Dice("d6")
+        scene_roll = d6.health_roll(self.__impact)
         # temporary str for the outcome
         outcome = "something happened"
 

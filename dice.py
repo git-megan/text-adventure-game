@@ -7,17 +7,17 @@ import random
 
 
 class Dice(object):
-    """
-    Creates Dice object
+    def __init__(self, name: str, sides: int = 6) -> None:
+        """
+        Creates Dice object
     
-    Attributes: 
-        name (str): the name of the dice
-        sides (int): the number of sides the dice has
-        sides will default to 6
-    Methods:
-        roll: rolls the dice
-    """
-    def __init__(self, name: str, sides: int = 6):
+        Attributes: 
+            name (str): the name of the dice
+            sides (int): the number of sides the dice has
+            sides will default to 6
+        Methods:
+            roll: rolls the dice
+        """
         self.__name = name
         self.__sides = sides
 
@@ -69,3 +69,22 @@ class Dice(object):
         """
         outcome = random.randint(1, self.__sides)
         return outcome
+    
+
+    def health_roll(self, impact: str) -> int:
+        """
+        Gets user's dice roll impacting a player's health
+        This method also prints what's going on in the game
+        (e.g. 'Roll the dice to find out what happens to Martin.')
+        
+        Args:
+            self: the dice object
+            impact (str): Narrative about what this dice roll impacts
+        Returns:
+            int: positive int about the dice outcome
+        """
+        print(f"\nRoll the dice to find out {impact}.")
+        kb_entry = input("Press ENTER to roll the dice >")
+        roll = self.roll()
+        print("\nYou rolled a", str(roll))
+        return roll

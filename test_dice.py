@@ -33,6 +33,20 @@ class DiceTest(unittest.TestCase):
             print(f"{d6_default.name} rolled a", str(test_roll))
 
 
+    def test_health_roll(self):
+        """
+        Tests if the health_roll works
+        Checks if 10 rolls of a d6 are in range (1-6)
+
+        Note: Manually check printed strings
+        """
+        d6_default = Dice("d6")
+        for i in range(10):
+            health_roll_outcome = d6_default.health_roll("if you can jump over the gap")
+            self.assertIn(health_roll_outcome, range(1, 7))
+            print(f"{d6_default.name} rolled a", str(health_roll_outcome))
+
+
 def main():
     # runs unit tests with more verbosity
     unittest.main(verbosity = 3)
