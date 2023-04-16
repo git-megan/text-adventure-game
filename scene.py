@@ -8,7 +8,7 @@ from game import health_roll
 
 
 class Scene(object):
-    def __init__(self, name: str, impact: str, player: str, cut_off: int, outcomes: dict) -> None:
+    def __init__(self, name: str, impact: str, player: str, cut_off: int, good_outcome: Tuple[str, int], bad_outcome: Tuple[str, int]) -> None:
         """
         Creates Scene object
         A scene allows the client to be told what might happen, roll the dice, and find out what happens
@@ -18,8 +18,10 @@ class Scene(object):
             impact (str): what will happen as a result of the dice roll
             player (str): which player is impacted
             cut_off (int): the lowest dice roll for a good outcome
-            outcomes (dict): dict containing story str and damage int for good and bad outcomes
-                    e.g. outcomes = {"good": ("this happened", 2), "bad":("that happened", 15)}
+            good_outcome (Tuple[str, int]): story str for good outcome and damage int
+                    e.g. ("this happened", 2)
+            bad_outcome (Tuple[str, int]): story str for bad outcome and damage int
+                    e.g. ("that happened", 15)}
 
         Methods:
             play: plays the scene, returns damage outcomes
@@ -28,8 +30,9 @@ class Scene(object):
         self.__impact = impact
         self.__player = player
         self.__cut_off = cut_off
-        self.__outcomes = outcomes
-    
+        self.__good_outcome = good_outcome
+        self.__bad_outcome = bad_outcome
+
 
     @property
     def name(self) -> str:
@@ -42,7 +45,7 @@ class Scene(object):
     
 
     @property
-    def player(self) -> list:
+    def player(self) -> str:
         return self.__player
     
 
@@ -52,8 +55,13 @@ class Scene(object):
     
 
     @property
-    def outcomes(self) -> int:
-        return self.__outcomes
+    def good_outcome(self) -> Tuple[str, int]:
+        return self.__good_outcome
+    
+
+    @property
+    def bad_outcome(self) -> Tuple[str, int]:
+        return self.__bad_outcome
     
 
     def __str__(self) -> str:
@@ -62,20 +70,15 @@ class Scene(object):
         Args:
             self: the scene object
         Returns:
-            str: Formatted string with scene name, players, and impact
+            str: Formatted string with scene name, player, and impact
         """
-        players_str = ""
-        # build str for players impacted by scene 
-        for name in self.__players:
-            players_str += name + ' '
-
         info = "Scene name: " + self.__name + "\n" \
                 "Impact: " + self.__impact + "\n" \
-                "Players impacted: " + players_str.strip()
+                "Player impacted: " + self.__player
         return info
     
 
-    def play(self) -> Tuple[str,int]:
+    def play(self) -> Tuple[str, int]:
         """
         Plays the scene
         Args:
@@ -94,11 +97,11 @@ class Scene(object):
 
         # find out the result of the dice roll
         if (scene_roll >= self.__cut_off):
-            outcome = self.__outcomes[good][0]
-            damage += self.__outcomes[good][1]
+            outcome = self.__good_outcome[0]
+            damage += self.__good_outcome[1]
         else:
-            outcome = self.__outcomes[bad][0]
-            damage += self.__outcomes[bad][1]
+            outcome = self.__bad_outcome[0]
+            damage += self.__bad_outcome[1]
 
         # print what just happened as a result of the dice roll
         print(f"\n{outcome}")
