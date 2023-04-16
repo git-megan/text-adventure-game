@@ -65,7 +65,6 @@ def run_intro() -> dict:
     Returns:
         Final health scores
     """
-    menu_options = "play, status, or exit"
     command, raw = menu()
     health_dict = {"Robin": 100, "Martin": 100, "You": 100}
 
@@ -115,7 +114,6 @@ def run_part_2(saved_scores: dict) -> dict:
         dict: Dictionary of health scores from playing Part II
     """
     health_dict = saved_scores
-    menu_options = "play, status, or exit"
     command, raw = menu()
     
     # loop continues until user exits
@@ -163,7 +161,6 @@ def run_part_3(saved_scores: dict) -> dict:
         dict: Dictionary of health scores from playing Part III
     """
     health_dict = saved_scores
-    menu_options = "play, status, or exit"
     command, raw = menu()
     
     # loop continues until user exits
@@ -217,7 +214,7 @@ def main() -> None:
     # run part I - intro
     health_dict_1 = run_intro()
     
-    # save scores
+    # saves scores each time a storyline runs
     final_scores = health_dict_1
 
     #current game ending str
