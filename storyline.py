@@ -2,6 +2,9 @@
 Megan Brown
 CS 5001 - Final Project
 File for story narrative elements
+
+Storylines will create the illusion that the player is making choices
+However, all storyline functions are for narrative purposes only
 """
 
 

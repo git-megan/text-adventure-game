@@ -1,12 +1,23 @@
 """
-    Megan Brown
-    CS 5001 - Final Project
-    Module for the game play
+Megan Brown
+CS 5001 - Final Project
+Module for the game play
 """
-import string
-from storyline import intro, part_2, part_3, resolution
-from typing import List, Tuple
-from dice import Dice
+from typing import Tuple
+import storyline
+from scene import Scene
+
+
+def run_title() -> None:
+    """
+    Runs the title sequence (v1: prints title)
+    Args:
+        None
+    Returns:
+        None
+    """
+    print("\nEscape of the Bees")
+    print("A text adventure game by Megan Brown")
 
 
 def menu() -> Tuple[str, str]:
@@ -41,103 +52,53 @@ def print_status(scores_dict: dict) -> None:
         print(f"{player_name}: {health}%")
 
 
-def health_roll(impact: str) -> int:
+def play_narrative(my_scene: Scene) -> None:
     """
-    Gets user's dice roll impacting a player's health
+    Prints the interactive narrative corresponding to the scene
     Args:
-        impact (str): Narrative about what this dice roll impacts
+    my_scene (Scene): The scene that the narrative is for
     Returns:
-        int: positive int about the dice outcome
+    None
     """
-    print(f"\nRoll the dice to find out {impact}.")
-    kb_entry = input("Press ENTER to roll the dice >")
-    d6 = Dice("d6")
-    roll = d6.roll()
-    print("\nYou rolled a", str(roll))
-    return roll
+    scene_title = my_scene.name
+    if (scene_title == "intro"):
+        storyline.intro()
+    elif (scene_title == "part_2"):
+        storyline.part_2()
+    elif (scene_title == "part_3"):
+        storyline.part_3()
 
 
-def run_intro() -> dict:
+def run_part(my_scene: Scene, health_dict: dict) -> dict:
     """
-    Runs Part I of the adventure game
+    Runs a narrative and scene of the adventure game
     Args:
-        None
+        my_scene (Scene): The scene object to play
+        health_dict (dict): A dict with the current health scores of players
     Returns:
-        Final health scores
+        dict: Health scores after playing this scene
     """
     command, raw = menu()
-    health_dict = {"Robin": 100, "Martin": 100, "You": 100}
+    menu_options = "play, status, or exit"
 
     # loop continues until user exits
     while (command != "exit"):
         if (command == "play"):
             # game play
-            # part I - intro to the bee swarm
-            intro()
-            damage = 5
-            intro_roll = health_roll("how badly Martin is stung")
-            if (intro_roll >= 5):
-                print("\nMartin squashed the bee against his neck, but the stinger was at an angle and managed to pop out.")
-            elif (intro_roll >= 3):
-                damage = damage * 2
-                print("\nMartin got stung in the neck, but he managed to squash the bee that did it.")
+            # play narrative intro
+            play_narrative(my_scene)
+            # play the scene, get dice roll damage outcome
+            player, damage = my_scene.play()
+
+            # update player's health score
+            print(f"Damage to health: -{str(damage)}")
+            if player != "everyone":
+                # update single player's health score
+                health_dict[player] = health_dict[player] - damage
             else:
-                damage = damage * 3
-                print("\nMartin is not doing well. He screams that he's allergic. His neck swells from the sting.")
-            
-            # update Martin's health score
-            print(f"Damage to Martin's health: -{str(damage)}")
-            original_health = health_dict["Martin"]
-            new_health = original_health - damage
-            health_dict["Martin"] = new_health
-            return health_dict
-
-        elif (command == "status"):
-            # prints health status
-            print_status(health_dict)
-            command, raw = menu()
-            
-        else:
-            print(f"Invalid command: must be {menu_options}")
-            # provide the menu again
-            command, raw = menu()
-    
-    return health_dict
-
-
-def run_part_2(saved_scores: dict) -> dict:
-    """
-    Runs Part II of the adventure game
-    Args:
-        saved_scores (dict): Dictionary of health scores from playing the intro
-    Returns:
-        dict: Dictionary of health scores from playing Part II
-    """
-    health_dict = saved_scores
-    command, raw = menu()
-    
-    # loop continues until user exits
-    while (command != "exit"):
-        if (command == "play"):
-            # game play
-            # part II - escape the bees
-            part_2()
-            damage = 0
-            part_2_roll = health_roll("if any bees have followed you")
-            if (part_2_roll > 3):
-                damage += 2
-                print("\nLuckily no bees have followed you. You're in the clear.")
-                print("\nUnfortunately, your arm got scratched while running.")
-            else:
-                damage += 15
-                print("\nA loud buzz rings in your ears.\nYou swat at your face, but it's too late, you've been stung.")
-            # update health score
-            print(f"Damage to your health: -{str(damage)}")
-            original_health = health_dict["You"]
-            new_health = original_health - damage
-            health_dict["You"] = new_health
-            choice = input("\nPress ENTER to continue >")
-            print("\nMeanwhile... your friends need you.")
+                # update everyone's health score
+                for key, value in health_dict.items():
+                    health_dict[key] = value - damage
             return health_dict
 
         elif (command == "status"):
@@ -145,51 +106,6 @@ def run_part_2(saved_scores: dict) -> dict:
             print_status(health_dict)
             command, raw = menu()
 
-        else:
-            print(f"Invalid command: must be {menu_options}")
-            # provide the menu again
-            command, raw = menu()
-    return health_dict
-
-
-def run_part_3(saved_scores: dict) -> dict:
-    """
-    Runs Part III of the adventure game
-    Args:
-        saved_scores (dict): Dictionary of health scores from playing the intro
-    Returns:
-        dict: Dictionary of health scores from playing Part III
-    """
-    health_dict = saved_scores
-    command, raw = menu()
-    
-    # loop continues until user exits
-    while (command != "exit"):
-        if (command == "play"):
-            # game play
-            # part III - help friends
-            part_3()
-            damage = 0
-            part_3_roll = health_roll("if your group out ran the bees")
-            if (part_3_roll > 2):
-                print("\nEveryone made it safely inside the stranger's house.")
-            else:
-                damage += 20
-                print("\nThe bees swarm and sting you as your run, but you make it inside the house.")
-                # update health scores for everyone in group
-                print(f"Damage to your group's health: -{str(damage)}")
-                for player, health in health_dict.items():
-                    new_health = health - damage
-                    health_dict[player] = new_health
-            
-            choice = input("\nPress ENTER to continue >")
-            return health_dict
-
-        elif (command == "status"):
-            # prints health status
-            print_status(health_dict)
-            command, raw = menu()
-       
         else:
             print(f"Invalid command: must be {menu_options}")
             # provide the menu again
@@ -209,34 +125,54 @@ def main() -> None:
     Returns:
         None
     """
-    print("\nEscape of the Bees")
-    print("A text adventure game by Megan Brown")
-    # run part I - intro
-    health_dict_1 = run_intro()
-    
-    # saves scores each time a storyline runs
-    final_scores = health_dict_1
+    # prints title of game
+    run_title()
 
-    #current game ending str
-    end_message = "\nThe end... 🐝"
+    # initialize game scenes
+    # To initialize, first create variables for scene objects
+    name_0 = "intro"
+    impact_0 = "how badly Martin is stung"
+    player_0 = "Martin"
+    cut_off_0 = 3
+    good_outcome_0 = ("Martin squashed the bee against his neck, but the stinger was at an angle and managed to pop out.", 5)
+    bad_outcome_0 = ("Martin screams that he's allergic. His neck swells from the sting.", 15)
+
+    name_1 = "part_2"
+    impact_1 = "if any bees have followed you"
+    player_1 = "You"
+    cut_off_1 = 4
+    good_outcome_1 = ("Luckily no bees have followed you, but you're arm got cut during the run.", 5)
+    bad_outcome_1 = ("A loud buzz rings in your ears.\nYou swat at your face, but it's too late, you've been stung.", 15)
+
+    name_2 = "part_3"
+    impact_2 = "if your group out ran the bees"
+    player_2 = "everyone"
+    cut_off_2 = 3
+    good_outcome_2 = ("Everyone made it safely inside the stranger's house.", 0)
+    bad_outcome_2 = ("The bees swarm and sting you as your run, but you make it inside the house.", 20)
+
+    # create scene objects
+    intro_scene = Scene(name_0, impact_0, player_0, cut_off_0, good_outcome_0, bad_outcome_0)
+    part_2_scene = Scene(name_1, impact_1, player_1, cut_off_1, good_outcome_1, bad_outcome_1)
+    part_3_scene = Scene(name_2, impact_2, player_2, cut_off_2, good_outcome_2, bad_outcome_2)
+
+    # saves scores each time a scene runs
+    health_scores = {"Robin": 100, "Martin": 100, "You": 100}
+    
+    # run part I - intro
+    health_scores = run_part(intro_scene, health_scores)
 
     # run part II - escape
-    martin_health = health_dict_1["Martin"]
-    if (martin_health != 100):
-        health_dict_2 = run_part_2(health_dict_1)
-        final_scores = health_dict_2
+    if (health_scores["Martin"] != 100):
+        health_scores = run_part(part_2_scene, health_scores)
         
         # run part III - help friends
-        your_health = health_dict_2["You"]
-        if (your_health != 100):
-            final_scores = run_part_3(health_dict_2)
-            end_message = "\nThe end... You survived!! 🎉"
-    
-        # resolution - bee keeper reveals context
-        # this plays for all endings/exits of the game
-        resolution()
+        if (health_scores["You"] != 100):
+            health_scores = run_part(part_3_scene, health_scores)
 
-    print(end_message)
+        # resolution - bee keeper reveals context
+        storyline.resolution()
+        print("\nThe end... You survived!! 🎉")
 
 
 if __name__ == "__main__":
