@@ -6,7 +6,7 @@ Scene class
 from typing import Tuple
 from dice import Dice
 
-class Scene(object):
+class Scene:
     def __init__(self, name: str, impact: str, player: str, cut_off: int, good_outcome: Tuple[str, int], bad_outcome: Tuple[str, int]) -> None:
         """
         Creates Scene object

@@ -6,7 +6,7 @@
 import random
 
 
-class Dice(object):
+class Dice:
     def __init__(self, name: str, sides: int = 6) -> None:
         """
         Creates Dice object
