@@ -8,16 +8,17 @@ import storyline
 from scene import Scene
 
 
-def run_title() -> None:
+def get_title() -> str:
     """
-    Runs the title sequence (v1: prints title)
+    Gets the title sequence string
     Args:
         None
     Returns:
-        None
+        str: The title and subtitle of the game
     """
-    print("\nEscape of the Bees")
-    print("A text adventure game by Megan Brown")
+    title = "\nEscape of the Bees"
+    subtitle = "\nA text adventure game by Megan Brown"
+    return title + subtitle
 
 
 def menu() -> Tuple[str, str]:
@@ -31,15 +32,15 @@ def menu() -> Tuple[str, str]:
     return check.strip().casefold(), check
 
 
-def print_status(scores_dict: dict) -> None:
+def get_status(scores_dict: dict) -> str:
     """
-    Prints the players' health scores in a formatted way
+    Gets the players' health scores
     Args:
         scores_dict (dict): A dictionary with the player name as key, and health as value
     Returns:
-        None
+        str: player's health scores in a formatted string
     """
-    print("\nHealth Status:")
+    status = "\nHealth Status:"
     for key, value in scores_dict.items():
         player_name = key
         health = value
@@ -48,8 +49,9 @@ def print_status(scores_dict: dict) -> None:
         if health < 0:
             health = 0
         
-        # prints health as a percentage
-        print(f"{player_name}: {health}%")
+        # add new line for player's health as a percentage
+        status += f"\n{player_name}: {health}%"
+    return status
 
 
 def play_narrative(my_scene: Scene) -> None:
@@ -92,7 +94,10 @@ def run_part(my_scene: Scene, health_dict: dict) -> Tuple[dict, str]:
             player, damage = my_scene.play()
 
             # update player's health score
-            print(f"Damage to health: -{str(damage)}")
+            if (damage == 0):
+                print (f"Damage to health: {str(damage)}")
+            else:
+                print(f"Damage to health: -{str(damage)}")
             if player != "everyone":
                 # update single player's health score
                 health_dict[player] = health_dict[player] - damage
@@ -103,8 +108,9 @@ def run_part(my_scene: Scene, health_dict: dict) -> Tuple[dict, str]:
             return health_dict, command
 
         elif (command == "status"):
-            # prints health status
-            print_status(health_dict)
+            # get and print health status
+            health_status = get_status(health_dict)
+            print(health_status)
             command, raw = menu()
 
         else:
@@ -114,21 +120,14 @@ def run_part(my_scene: Scene, health_dict: dict) -> Tuple[dict, str]:
     return health_dict, command
 
 
-def main() -> None:
+def create_scenes() -> Tuple[Scene, Scene, Scene]:
     """
-    Runs the adventure game
-    
-    Health scores are saved at each chapter 
-    and passed on to the next chapeter
-
+    Instantiates the scenes for this game
     Args:
         None
     Returns:
-        None
+        Tuple[Scene, Scene, Scene]: All of the scenes for the game
     """
-    # prints title of game
-    run_title()
-
     # initialize game scenes
     # To initialize, first create variables for scene objects
     name_0 = "intro"
@@ -157,19 +156,41 @@ def main() -> None:
     part_2_scene = Scene(name_1, impact_1, player_1, cut_off_1, good_outcome_1, bad_outcome_1)
     part_3_scene = Scene(name_2, impact_2, player_2, cut_off_2, good_outcome_2, bad_outcome_2)
 
+    # return tuple of scenes
+    return intro_scene, part_2_scene, part_3_scene
+
+
+def main() -> None:
+    """
+    Runs the adventure game
+    
+    Health scores are saved at each chapter 
+    and passed on to the next chapeter
+
+    Args:
+        None
+    Returns:
+        None
+    """
+    # prints title of game
+    print(get_title())
+
+    # initialize game scenes
+    game_scenes = create_scenes()
+
     # saves scores each time a scene runs
     health_scores = {"Robin": 100, "Martin": 100, "You": 100}
-    
+
     # run part I - intro
-    health_scores, command = run_part(intro_scene, health_scores)
+    health_scores, command = run_part(game_scenes[0], health_scores)
 
     # run part II - escape
     if (health_scores["Martin"] != 100) and (command != "exit"):
-        health_scores, command = run_part(part_2_scene, health_scores)
-        
+        health_scores, command = run_part(game_scenes[1], health_scores)
+ 
         # run part III - help friends
         if (health_scores["You"] != 100) and (command != "exit"):
-            health_scores, command = run_part(part_3_scene, health_scores)
+            health_scores, command = run_part(game_scenes[2], health_scores)
 
             # resolution - bee keeper reveals context
             if (command != "exit"):
