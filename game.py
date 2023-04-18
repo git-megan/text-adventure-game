@@ -69,14 +69,15 @@ def play_narrative(my_scene: Scene) -> None:
         storyline.part_3()
 
 
-def run_part(my_scene: Scene, health_dict: dict) -> dict:
+def run_part(my_scene: Scene, health_dict: dict) -> Tuple[dict, str]:
     """
     Runs a narrative and scene of the adventure game
     Args:
         my_scene (Scene): The scene object to play
         health_dict (dict): A dict with the current health scores of players
     Returns:
-        dict: Health scores after playing this scene
+        Tuple[dict, str]: Health scores after playing this scene, menu command
+        (e.g. ({"Robin": 100, "Martin": 95, "You": 80}, "exit"))
     """
     command, raw = menu()
     menu_options = "play, status, or exit"
@@ -99,7 +100,7 @@ def run_part(my_scene: Scene, health_dict: dict) -> dict:
                 # update everyone's health score
                 for key, value in health_dict.items():
                     health_dict[key] = value - damage
-            return health_dict
+            return health_dict, command
 
         elif (command == "status"):
             # prints health status
@@ -110,7 +111,7 @@ def run_part(my_scene: Scene, health_dict: dict) -> dict:
             print(f"Invalid command: must be {menu_options}")
             # provide the menu again
             command, raw = menu()
-    return health_dict
+    return health_dict, command
 
 
 def main() -> None:
@@ -141,8 +142,8 @@ def main() -> None:
     impact_1 = "if any bees have followed you"
     player_1 = "You"
     cut_off_1 = 4
-    good_outcome_1 = ("Luckily no bees have followed you, but you're arm got cut during the run.", 5)
-    bad_outcome_1 = ("A loud buzz rings in your ears.\nYou swat at your face, but it's too late, you've been stung.", 15)
+    good_outcome_1 = ("Luckily no bees have followed you, but you're arm got cut during the run.", 3)
+    bad_outcome_1 = ("A loud buzz rings in your ears.\nYou swat at your face, but it's too late, you've been stung.", 10)
 
     name_2 = "part_3"
     impact_2 = "if your group out ran the bees"
@@ -160,19 +161,20 @@ def main() -> None:
     health_scores = {"Robin": 100, "Martin": 100, "You": 100}
     
     # run part I - intro
-    health_scores = run_part(intro_scene, health_scores)
+    health_scores, command = run_part(intro_scene, health_scores)
 
     # run part II - escape
-    if (health_scores["Martin"] != 100):
-        health_scores = run_part(part_2_scene, health_scores)
+    if (health_scores["Martin"] != 100) and (command != "exit"):
+        health_scores, command = run_part(part_2_scene, health_scores)
         
         # run part III - help friends
-        if (health_scores["You"] != 100):
-            health_scores = run_part(part_3_scene, health_scores)
+        if (health_scores["You"] != 100) and (command != "exit"):
+            health_scores, command = run_part(part_3_scene, health_scores)
 
-        # resolution - bee keeper reveals context
-        storyline.resolution()
-        print("\nThe end... You survived!! 🎉")
+            # resolution - bee keeper reveals context
+            if (command != "exit"):
+                storyline.resolution()
+                print("\nThe end... You survived!! 🎉")
 
 
 if __name__ == "__main__":
