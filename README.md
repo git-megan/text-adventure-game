@@ -1,6 +1,6 @@
 # Escape of the Bees 🐝
-A text-based adventure game by Megan Brown
-Last Updated Readme: 4/19/23
+- A text-based adventure game by Megan Brown
+- Last Updated Readme: 4/19/23
 
 ## About the Project
 I created a text-based adventure game as my final project for CS 5001 - Intensive Foundations of Computer Science at Northeastern University. The goal was to create something of my own that would allow me to demonstrate concepts from the class and learn new skills. 
