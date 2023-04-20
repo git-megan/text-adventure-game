@@ -54,6 +54,31 @@ def get_status(scores_dict: dict) -> str:
     return status
 
 
+def update_scores(scores_dict: dict, player: str, damage: int) -> dict:
+    """
+    Updates the player's health scores
+    Args:
+        scores_dict (dict): A dictionary with the original health scores
+        player (str): The player(s) taking the damage
+        (Can be the name of one player or 'everyone')
+        damage (int): The amount of damage to deduct from the player(s)
+    Returns:
+        dict: A dictionary with the updated health scores
+    """
+    if player != "everyone":
+        # update single player's health score
+        if player in scores_dict:
+            scores_dict[player] = scores_dict[player] - damage
+        else:
+            # if necessary, create a new entry for a new player
+            scores_dict[player] = 100 - damage
+    else:
+        # update everyone's health score
+        for key, value in scores_dict.items():
+            scores_dict[key] = value - damage
+    return scores_dict
+
+
 def play_narrative(my_scene: Scene) -> None:
     """
     Prints the interactive narrative corresponding to the scene
@@ -93,19 +118,10 @@ def run_part(my_scene: Scene, health_dict: dict) -> Tuple[dict, str]:
             # play the scene, get dice roll damage outcome
             player, damage = my_scene.play()
 
-            # update player's health score
-            if (damage == 0):
-                print (f"Damage to health: {str(damage)}")
-            else:
-                print(f"Damage to health: -{str(damage)}")
-            if player != "everyone":
-                # update single player's health score
-                health_dict[player] = health_dict[player] - damage
-            else:
-                # update everyone's health score
-                for key, value in health_dict.items():
-                    health_dict[key] = value - damage
-            return health_dict, command
+            # update health score
+            new_health_scores = update_scores(health_dict, player, damage)
+
+            return new_health_scores, command
 
         elif (command == "status"):
             # get and print health status
@@ -185,11 +201,11 @@ def main() -> None:
     health_scores, command = run_part(game_scenes[0], health_scores)
 
     # run part II - escape
-    if (health_scores["Martin"] != 100) and (command != "exit"):
+    if (command != "exit"):
         health_scores, command = run_part(game_scenes[1], health_scores)
  
         # run part III - help friends
-        if (health_scores["You"] != 100) and (command != "exit"):
+        if (command != "exit"):
             health_scores, command = run_part(game_scenes[2], health_scores)
 
             # resolution - bee keeper reveals context

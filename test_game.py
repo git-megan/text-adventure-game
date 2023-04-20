@@ -112,6 +112,37 @@ def test_get_status() -> int:
     return fails
 
 
+def test_update_scores() -> int:
+    """
+    Tests if function correctly updates player's health scores
+    Args:
+        None
+    Returns:
+        int: test case fail count
+    """
+    print("\nTesting 'update_scores'...")
+    fails = 0
+    test_dict_1 = {"Robin": 100, "Martin": 100, "You":100}
+    expected_1 = {"Robin": 100, "Martin": 100, "You":100, "Miles": 85}
+    test_dict_2 = {"Robin": 100, "Martin": 100, "You":100}
+    expected_2 = {"Robin": 80, "Martin": 80, "You":80}
+    test_dict_3 = {"Robin": 100, "Martin": 100, "You":100}
+    expected_3 = {"Robin": 100, "Martin": 100, "You":90}
+    # test if given an update for a player not accounted for
+    if (game.update_scores(test_dict_1, "Miles", 15) != expected_1):
+        print("Failed test: incorrect scores when updating a player not in original dict")
+        fails += 1
+    # test if given an update for all players
+    if (game.update_scores(test_dict_2, "everyone", 20) != expected_2):
+        print("Failed test: Did not correctly update 20 damage for 'everyone'")
+        fails += 1
+    # test is given an update for 'You'
+    if (game.update_scores(test_dict_3, "You", 10) != expected_3):
+        print("Failed test: Did not correctly update 10 damage from 'You'")
+        fails += 1
+    return fails
+
+
 def test_play_narrative() -> int:
     """
     Test if the correct narrative plays
@@ -151,7 +182,7 @@ def test_run_part() -> int:
     """
     print("\nTesting run_part...")
     fails = 0
-    print_instructions("ending", "Play the scene then type 'exit' when game menu prompts")
+    print_instructions("n/a", "Type 'play' when game menu appears, then play")
     # Test case uses part_3_scene
     name_2 = "part_3"
     impact_2 = "if your group out ran the bees"
@@ -168,8 +199,8 @@ def test_run_part() -> int:
     if (health_outcome != health_start) and (health_outcome != health_bad_outcome):
         print("Failed test: Incorrect health dictionary returned")
         fails += 1
-    if (command != "exit"):
-        print("Failed test: command returned is not 'exit'")
+    if (command != "play"):
+        print("Failed test: command returned is not 'play'")
         fails += 1
     return fails
 
@@ -221,12 +252,17 @@ def test_main() -> int:
 def main() -> None:
     """
     Runs all test cases for game.py
+    Args:
+        None
+    Returns:
+        None
     """
     fail_count = 0
     print("Running all tests for game.py...")
     fail_count += test_get_title()
     fail_count += test_menu()
     fail_count += test_get_status()
+    fail_count += test_update_scores()
     fail_count += test_play_narrative()
     fail_count += test_run_part()
     fail_count += test_create_scenes()
