@@ -1,6 +1,11 @@
 # Escape of the Bees 🐝
 - A text-based adventure game by Megan Brown
-- Last Updated Readme: 4/19/23
+- Last Updated Readme: 20 April 2023
+
+## About the Game
+*Story Premise:* You are driving to a trailhead with two of your close friends - Martin and Robin. All of a sudden, you are surrounded by a swarm of angry killer bees. Follow the story and roll the dice to find out how you navigate this situation.
+
+*How to Play:* If you have Python on your computer, download the files and run game.py. Interact with the text-based prompts.
 
 ## About the Project
 I created a text-based adventure game as my final project for CS 5001 - Intensive Foundations of Computer Science at Northeastern University. The goal was to create something of my own that would allow me to demonstrate concepts from the class and learn new skills. 
@@ -9,12 +14,25 @@ I created a text-based adventure game as my final project for CS 5001 - Intensiv
 - *Role:* Software Engineer (on a team of 1, so I was also the game designer)
 - *Project:* Text-based adventure game
 
-Key aspects of the project include using Object-oriented Programming, fitting data types and structures, and Git for version control. For example, I created the dice and scenes as objects, and this allowed me to write more modular code that was easier to test and maintain. I used dictionaries to keep track of each player’s health score. Also, I learned Git during this timeframe, and I was able to use it for this project.
+### The Challenge
+I decided to use this project as an opportunity to get practice with object-oriented programming and using fitting data types and structures. I also set the goal of learning the basics of Git for version control, so that I could set myself up to contribute to group projects that use Git in the future.
 
-### About the Game
-*Instructions:* To play the game, run the game.py file and interact with the text-based prompts.
+### The Process
+*1. Planning & Feedback:* I first wrote a spec to plan the game requirements and a roadmap for the codebase, and to ensure the project is correctly scoped for the timeframe. I got feedback from Professor Mark Miller about the scope and how I'd demonstrate concepts from CS 5001 (i.e. objects, dictionaries, etc.), and then started development.
+*2. Creating a V1:* I learned Git and used it while implementing the first version of this game. I implemented dice as objects, which was easy to plan and test. I then implemented a tracker for health scores using a dictionary, and I put most of the strings for the game in storyline.py file. While it the dice class was easy to test, and implementing dice as objects went smoothly, I realized that I needed to make game.py (which contains most of the game logic) more modular and easier to test.
+*3. Scenes as Objects:* I created a branch so that I could do a major refactoring of game logic. I decided to implement scenes (i.e. a segment in the game in which there is a scenario, a dice roll, and a revealing of the outcome) as objects. After developing and testing this update, I merged the branch with main (in time for a live demo).
+*4. Demo Day:* On 17 April 2023, I presented the project, demoed the game using the latest version in which scenes are objects, and walked through the code. The demo went well, and I received feedback about how to continue improving the codebase so that it is more flexible and extensible.
 
-*Story Premise:* You are driving to a trailhead with two of your close friends - Martin and Robin. All of a sudden, you are surrounded by a swarm of angry killer bees. Follow the story and roll the dice to find out how you navigate this situation.
+### The Impact
+Through this project, I got a better understanding of how to write more modular, flexible, object-oriented code. I also practiced good development habits such as planning, testing, and documentation. Additionally, I learned the basics of how to use Git & GitHub.
+
+### Development Notes
+While the game can be played, it is still a work in progress. I plan to make the following improvements:
+| *Update* | *Purpose* | *Estimated Worklaod* |
+| --- | --- | ---|
+| Strings in Text File | Separate strings from app logic completely, to allow for possibilities such as localization. | L |
+| Players as Objects | Improve upon current OOP design, allow for character classes with various skill sets, and improve upon how health scores are saved. | M |
+| Host Game Online | Allows for people to play the game through a website, rather than download the game files and Python | M |
 
 ## Retrospective
 Through this project, I learned a lot about software development best practices. I was also better able to internalize these learnings, because I had experienced them in a hands-on way (learning by doing). 
