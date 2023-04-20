@@ -105,6 +105,11 @@ class Scene:
 
         # print what just happened as a result of the dice roll
         print(f"\n{outcome}")
+        # print resulting damage to player's health
+        if (damage == 0):
+            print (f"Damage to health: {str(damage)}")
+        else:
+            print(f"Damage to health: -{str(damage)}")
 
         # returns a tuple of player impacted, health damage
         result = (self.__player, damage)
