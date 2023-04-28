@@ -1,6 +1,6 @@
 # Escape of the Bees 🐝
 - A text-based adventure game by Megan Brown
-- Last Updated Readme: 20 April 2023
+- Last Updated Readme: 28 April 2023
 
 ## About the Game
 *Story Premise:* You are driving to a trailhead with two of your close friends - Martin and Robin. All of a sudden, you are surrounded by a swarm of angry killer bees. Follow the story and roll the dice to find out how you navigate this situation.
@@ -27,7 +27,7 @@ I decided to use this project as an opportunity to get more practice with object
 Through this project, I got a better understanding of how to write more modular, flexible, object-oriented code. I also practiced good development habits such as planning, testing, and documentation. Additionally, I learned the basics of how to use Git & GitHub.
 
 ### Development Notes
-While the game can be played, it is still a work in progress. I plan to make the following improvements:
+While the game can be played, it is still a work in progress. I would like to make the following improvements:
 | *Update* | *Purpose* | *Priority* | *Estimated Worklaod* |
 | --- | --- | --- | --- |
 | Strings in CSV File | Separate strings for the game's story from the app logic; improve design of tests | 1 | M |
