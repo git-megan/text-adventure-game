@@ -21,18 +21,19 @@ I decided to use this project as an opportunity to get more practice with object
 1. *Planning & Feedback:* I wrote a spec to plan the game requirements and my approach to coding the game. The spec also allowed me to scope the project for the 5-week timeframe. I then got feedback from Professor Mark Miller about the scope and how I'd demonstrate concepts from CS 5001 (i.e. objects, dictionaries, etc.).
 2. *Creating a V1:* I learned Git and used it while developing the first version of this game. I implemented dice as objects, which was easy to plan and test. I then implemented a tracker for health scores using a dictionary, and I put most of the strings for the game in storyline.py file. While the dice class was easy to test and use, I realized that game.py (which contains most of the game logic) needed to be more modular and easier to test.
 3. *Scenes as Objects:* I created a branch so that I could do a major refactoring of game logic. I decided to implement scenes (i.e. a segment in the game in which there is a scenario, a dice roll, and a revealing of the outcome) as objects. After developing and testing this update, I merged the branch with main (just in time for a live demo).
-4. *Demo Day:* On 17 April 2023, I presented the project, demoed the game using the latest version in which scenes are objects, and walked through the code. The demo went well, and I received feedback about how to continue improving the codebase.
+4. *Demo Day:* On 17 April 2023, I presented the project, demoed the game using the latest version in which scenes are objects, and walked through the code. The demo went well, and I received feedback about how to continue improving the code quality.
 
 ### The Impact
 Through this project, I got a better understanding of how to write more modular, flexible, object-oriented code. I also practiced good development habits such as planning, testing, and documentation. Additionally, I learned the basics of how to use Git & GitHub.
 
 ### Development Notes
 While the game can be played, it is still a work in progress. I plan to make the following improvements:
-| *Update* | *Purpose* | *Estimated Worklaod* |
-| --- | --- | ---|
-| Strings in Text File | Separate strings from app logic | L |
-| Players as Objects | Improve upon current OOP design, implement health score as attribute | M |
-| Host Game Online | Allow for people to play the game through a website, rather than download the game files and Python | M |
+| *Update* | *Purpose* | *Priority* | *Estimated Worklaod* |
+| --- | --- | --- | --- |
+| Strings in CSV File | Separate strings for the game's story from the app logic; improve design of tests | 1 | M |
+| Players as Objects | Improve upon current OOP design; implement health score as attribute; improve design of tests | 2 | M |
+| Host Game Online (Using Replit) | Allow for people to play the game through a website, rather than download the game files and Python | 3 | S |
+| Use a Database to Store Game State | I can learn how to use databases (SQLite) | 3 | L |
 
 ## Retrospective
 Through this project, I learned a lot about software development best practices. I was also better able to internalize these learnings, because I had experienced them in a hands-on way (learning by doing). 
